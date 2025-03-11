@@ -8,9 +8,10 @@ st.set_page_config(layout="wide")
 
 # 📌 Titre de l'application
 st.title("Carte interactive des entreprises en Suisse")
+st.markdown("<h3 style='font-size:20px;'>Visualisez les entreprises par catégorie et exportez les données filtrées.</h3>", unsafe_allow_html=True)
 
 # 📌 Charger le fichier corrigé
-csv_file = "Companies_geocoded_all_unique_corrected.csv"
+csv_file = "data/Companies_geocoded_all_unique_corrected.csv"
 df = pd.read_csv(csv_file)
 
 # 📌 Vérifier les colonnes nécessaires
@@ -33,6 +34,17 @@ if {"latitude", "longitude", "Group", "Cantons"}.issubset(df.columns):
     if selected_canton != "Tous":
         filtered_df = filtered_df[filtered_df["Cantons"] == selected_canton]
 
+    # Affichage des données brutes filtrées en dessous du titre
+    st.subheader("Données détaillées")
+    # Affichage avec une hauteur limitée pour n'afficher que 5 lignes et activer le scroll
+    st.dataframe(filtered_df, height=200)
+    st.download_button(
+        label="Télécharger les données",
+        data=filtered_df.to_csv(index=False),
+        file_name="filtered_data.csv",
+        mime="text/csv"
+    )
+
     # 🗺️ Création de la carte avec un fond clair
     m = folium.Map(
         location=[46.8182, 8.2275], 
@@ -53,12 +65,12 @@ if {"latitude", "longitude", "Group", "Cantons"}.issubset(df.columns):
             popup=f"{row['Companies']} - {row['Cities']} ({row['Group']})"
         ).add_to(m)
 
-    # 📌 Afficher la carte dans la colonne de droite (80% de la page)
     with col2:
-        st_folium(m, width=1400, height=750)
+        st_folium(m, width=1400, height=650)
 
 else:
     st.error("Les colonnes nécessaires ('latitude', 'longitude', 'Group', 'Cantons') ne sont pas présentes dans le fichier CSV.")
+
 
 
 
