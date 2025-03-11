@@ -39,7 +39,7 @@ gdf = gdf.merge(
 gdf.fillna(0, inplace=True)
 
 # 📌 Définition des seuils pour la choroplèthe
-bins = [5,10,15,20,25, 30, 35, 40]
+bins = [0, 5,10,15,20,25, 30, 35, 40]
 
 # 📌 Création de la carte Folium
 m = folium.Map(location=[46.8182, 8.2275], zoom_start=8, tiles="CartoDB positron")
