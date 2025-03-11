@@ -11,7 +11,7 @@ from shapely.geometry import Point
 # 📌 Configuration de la page Streamlit
 st.set_page_config(layout="wide")
 st.title("Carte du potentiel énergétique total par canton")
-st.markdown("<h3 style='font-size:20px;'>Le potentiel énergétique total (en GWh) correspond à l'ensemble des flux du chap. 07 (07.XX.01, 07.XX.04, 07.XX.08, 07.XX.11) de l'OMoD valorisé par gazéification hydrothermale (GHT)</h3>", unsafe_allow_html=True)
+st.markdown("<h3 style='font-size:20px;'>Le potentiel énergétique résiduel (en GWh) correspond à la valorisation des flux restants après optimisation du PCI moyen à 18 MJ/Kg </h3>", unsafe_allow_html=True)
 
 
 # 📌 Chemins des fichiers
@@ -39,7 +39,7 @@ gdf = gdf.merge(
 gdf.fillna(0, inplace=True)
 
 # 📌 Définition des seuils pour la choroplèthe
-bins = [0, 5, 10, 20, 40, 80, 130, 180, 230, 280, 320, 370, 420, 470, 520, 570, 620]
+bins = [5,10,15,20,25, 30, 35, 40]
 
 # 📌 Création de la carte Folium
 m = folium.Map(location=[46.8182, 8.2275], zoom_start=8, tiles="CartoDB positron")
