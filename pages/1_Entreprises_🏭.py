@@ -7,7 +7,7 @@ from streamlit_folium import st_folium
 st.set_page_config(layout="wide")
 
 # 📌 Titre de l'application
-st.title("Carte interactive des entreprises en Suisse")
+st.title("Carte interactive des entreprises qui remettent, regroupent et éliminent des déchets spéciaux liquides en Suisse")
 st.markdown("<h3 style='font-size:20px;'>Visualisez les entreprises par catégorie et exportez les données filtrées.</h3>", unsafe_allow_html=True)
 
 # 📌 Charger le fichier corrigé
@@ -21,12 +21,14 @@ if {"latitude", "longitude", "Group", "Cantons"}.issubset(df.columns):
     color_map = {"Remettantes": "green", "Incinération": "red", "Regroupement": "blue"}
     size_map = {"Remettantes": 2, "Incinération": 8, "Regroupement": 4}
 
-    # 📌 Organisation de la mise en page (2 colonnes : filtres à gauche, carte à droite)
-    col1, col2 = st.columns([0.2, 0.8])  # 20% pour les filtres, 80% pour la carte
-
-    with col1:  # 🎯 Filtres à gauche
-        st.subheader("Filtres")
+    # 📌 Filtres côte à côte au-dessus de la carte
+    st.subheader("Filtres")
+    col_filters1, col_filters2 = st.columns(2)
+    
+    with col_filters1:
         selected_canton = st.selectbox("Sélectionnez un canton :", ["Tous"] + sorted(df["Cantons"].unique()))
+    
+    with col_filters2:
         selected_group = st.multiselect("Filtrer par type d'entreprise :", df["Group"].unique(), default=df["Group"].unique())
 
     # 📌 Appliquer les filtres aux données
@@ -34,9 +36,8 @@ if {"latitude", "longitude", "Group", "Cantons"}.issubset(df.columns):
     if selected_canton != "Tous":
         filtered_df = filtered_df[filtered_df["Cantons"] == selected_canton]
 
-    # Affichage des données brutes filtrées en dessous du titre
+    # Affichage des données brutes filtrées
     st.subheader("Données détaillées")
-    # Affichage avec une hauteur limitée pour n'afficher que 5 lignes et activer le scroll
     st.dataframe(filtered_df, height=200)
     st.download_button(
         label="Télécharger les données",
@@ -65,8 +66,8 @@ if {"latitude", "longitude", "Group", "Cantons"}.issubset(df.columns):
             popup=f"{row['Companies']} - {row['Cities']} ({row['Group']})"
         ).add_to(m)
 
-    with col2:
-        st_folium(m, width=1400, height=650)
+    # Affichage de la carte en pleine largeur
+    st_folium(m, width=1400, height=650)
 
 else:
     st.error("Les colonnes nécessaires ('latitude', 'longitude', 'Group', 'Cantons') ne sont pas présentes dans le fichier CSV.")

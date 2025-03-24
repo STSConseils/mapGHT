@@ -24,8 +24,8 @@ st.markdown(
 # Puis ton markdown habituel
 st.markdown(
     """
-    Ce dashboard vous permet d'explorer les résultats géoréférencés du projet **La Gazéification Hydrothermale en Suisse : une alternative durable à l’incinération des déchets spéciaux liquides**.
-    **👈 Selectionnez une carte dans la barre latérale** pour commencer à explorer les données!
+    Ce dashboard vous permet d'explorer les résultats géoréférencés du projet **La Gazéification Hydrothermale en Suisse : une alternative durable à l'incinération des déchets spéciaux liquides**.<br><br>
+    👈 Selectionnez une carte dans la barre latérale pour commencer à explorer les données!
     """,
     unsafe_allow_html=True
 )
