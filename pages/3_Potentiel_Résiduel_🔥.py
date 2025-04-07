@@ -10,7 +10,7 @@ from shapely.geometry import Point
 
 # 📌 Configuration de la page Streamlit
 st.set_page_config(layout="wide")
-st.title("Carte du potentiel énergétique total par canton")
+st.title("Carte du potentiel énergétique résiduel par canton")
 st.markdown("<h3 style='font-size:20px;'>Le potentiel énergétique résiduel (en GWh) correspond à la valorisation des flux restants après optimisation du PCI moyen à 18 MJ/Kg </h3>", unsafe_allow_html=True)
 
 
@@ -99,8 +99,8 @@ with col2:
         
         # Récupérer les valeurs des flux énergétiques
         energy_values = {
-            "Solvants usagés": canton_data["Pot_Ener_01 [GWh]"],
-            "Eaux solvantées": canton_data["Pot_Ener_04 [GWh]"],
+            "Eaux solvantées": canton_data["Pot_Ener_01 [GWh]"],
+            "Solvants usagés": canton_data["Pot_Ener_04 [GWh]"],
             "Boues industrielles": canton_data["Pot_Ener_08 [GWh]"],
             "Émulsions": canton_data["Pot_Ener_11 [GWh]"]
         }
